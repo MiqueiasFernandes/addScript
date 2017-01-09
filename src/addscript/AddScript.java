@@ -5,6 +5,7 @@
  */
 package addscript;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -34,7 +35,6 @@ public class AddScript {
             System.exit(0);
         }
 
-        String json = null;
         Data datasource = new Data();
         Scanner s = null;
         boolean added = false;
@@ -94,9 +94,9 @@ public class AddScript {
 
                 if (next.contains("var docs_json = ")) {
                     sb.append("<div id=\"htmlwidget_container\">\n"
-                            + "<div id=\"htmlwidget-" 
-                            + elID 
-                            + "\" class=\"rbokeh html-widget\" " 
+                            + "<div id=\"htmlwidget-"
+                            + elID
+                            + "\" class=\"rbokeh html-widget\" "
                             + style + "\n"
                             + "\n"
                             + "</div>\n"
@@ -147,10 +147,14 @@ public class AddScript {
             }
 
             try {
-                FileWriter fw = new FileWriter("saida.html");
+                String name = "new-" + new File(st).getName();
+                if (!name.endsWith(".html")) {
+                    name += ".html";
+                }
+                FileWriter fw = new FileWriter(name);
                 fw.write(sb.toString());
                 fw.close();
-                System.out.println("executado com sucesso! salvo em saida.html");
+                System.out.println("executado com sucesso! salvo em " + name);
             } catch (IOException ex) {
                 System.err.println("erro ao gravar arquivo: " + ex);
             }
